@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.RelativeLayout;
 
 public class Navigation extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -81,6 +82,8 @@ public class Navigation extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_tanzkursplan) {
+          //TODO:  RelativeLayout drawer = (RelativeLayout) findViewById(R.id.view_tanzkursplan);
+
             // Handle the camera action
         } else if (id == R.id.nav_kursinhalte) {
 
