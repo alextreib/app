@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_tanzkursplan"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Tanzkursplan" />
+        <item
+            android:id="@+id/nav_kursinhalte"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Kursinhalte" />
+        <item
+            android:id="@+id/nav_tanzpartys"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Tanzpartys" />
+        <item
+            android:id="@+id/nav_news"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="News" />
+    </group>
+
+    <item android:title="Kommunizieren">
+        <menu>
+            <item
+                android:id="@+id/nav_app_teilen"
+                android:icon="@drawable/ic_menu_share"
+                android:title="App teilen" />
+            <item
+                android:id="@+id/nav_kontakt"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Kontakt" />
+        </menu>
+    </item>
+
+</menu>
