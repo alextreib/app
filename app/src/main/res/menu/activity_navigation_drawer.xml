@@ -28,7 +28,7 @@
                 android:title="App teilen" />
             <item
                 android:id="@+id/nav_kontakt"
-                android:icon="@drawable/ic_menu_share"
+                android:icon="@drawable/ic_menu_send"
                 android:title="Kontakt" />
         </menu>
     </item>

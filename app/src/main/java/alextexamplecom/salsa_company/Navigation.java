@@ -80,17 +80,17 @@ public class Navigation extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_tanzkursplan) {
             // Handle the camera action
-        } else if (id == R.id.nav_tanzkursplan) {
+        } else if (id == R.id.nav_kursinhalte) {
 
-        } else if (id == R.id.nav_tan) {
+        } else if (id == R.id.nav_tanzpartys) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_kontakt) {
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_app_teilen) {
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_kontakt) {
 
         }
 
