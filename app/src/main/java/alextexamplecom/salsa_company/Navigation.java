@@ -79,6 +79,10 @@ public class Navigation extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+//        Snackbar mySnackbar = Snackbar.make((NavigationView) findViewById(R.id.sidebar_navigation),
+//                "test", Snackbar.LENGTH_SHORT);
+//        mySnackbar.setAction("test", null);
+//        mySnackbar.show();
         // Handle sidebar view item clicks here.
         int id = item.getItemId();
 
@@ -98,8 +102,8 @@ public class Navigation extends AppCompatActivity
 
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+//        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 }
