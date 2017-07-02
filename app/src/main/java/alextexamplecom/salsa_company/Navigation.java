@@ -1,121 +1,99 @@
 package alextexamplecom.salsa_company;
 
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.Gravity;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.widget.Toast;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.appindexing.Thing;
-import com.google.android.gms.common.api.GoogleApiClient;
+import android.util.Log;
 
 public class Navigation extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout m_drawerLayout;
+    private static final String TAG = Navigation.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.v_start);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.v_start);
-        m_drawerLayout=drawer;
-        initToolBar(drawer,getString(R.string.app_name) );
-
-
-        //unnecessary
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        m_drawerLayout = drawer;
+        initToolBar(drawer, getString(R.string.app_name));
     }
 
     @Override
     public void onBackPressed() {
         setContentView(R.layout.v_start);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.v_start);
-        initToolBar(drawer,getString(R.string.app_name) );
+        initToolBar(drawer, getString(R.string.app_name));
         super.onBackPressed();
-
-//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.v_start);
-//        if (drawer.isDrawerOpen(GravityCompat.START)) {
-//            //close the drawer -> and close the application
-//            drawer.closeDrawers();
-//        } else {
-//            super.onBackPressed();
-//        }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.action_account, menu);
+        getMenuInflater().inflate(R.menu.setttings, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem menuitem) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        int id = menuitem.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            setContentView(R.layout.v_account);
+        if (id == R.id.account_settings) {
+            SetNavItem(R.layout.v_account, (DrawerLayout) findViewById(R.id.v_account), menuitem.getTitle().toString());
             return true;
         }
 
-        return super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(menuitem);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem menuitem) {
         // Is called when the user clicks on an item of the navigation bar
-        int id = menuitem.getItemId();
         menuitem.setChecked(true);
 
         //close the drawer before new content is loaded -> error because R.id.v_start can't be found
         m_drawerLayout.closeDrawer(GravityCompat.START);
 
+        int id = menuitem.getItemId();
         if (id == R.id.nav_tanzkursplan) {
-            setContentView(R.layout.v_tanzkursplan);
-            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.v_tanzkursplan);
-            m_drawerLayout=drawer;
-            initToolBar(drawer,menuitem.getTitle().toString());
+            SetNavItem(R.layout.v_tanzkursplan, (DrawerLayout) findViewById(R.id.v_tanzkursplan), menuitem.getTitle().toString());
         } else if (id == R.id.nav_kursinhalte) {
-            setContentView(R.layout.v_tanzkursinhalt);
+            SetNavItem(R.layout.v_tanzkursinhalt, (DrawerLayout) findViewById(R.id.v_tanzkursinhalt), menuitem.getTitle().toString());
         } else if (id == R.id.nav_tanzpartys) {
-
-        } else if (id == R.id.nav_kontakt) {
-
+            SetNavItem(R.layout.v_tanzpartys, (DrawerLayout) findViewById(R.id.v_tanzpartys), menuitem.getTitle().toString());
         } else if (id == R.id.nav_app_teilen) {
-
+//open share options
         } else if (id == R.id.nav_kontakt) {
-
+            SetNavItem(R.layout.v_contact, (DrawerLayout) findViewById(R.id.v_contact), menuitem.getTitle().toString());
         }
+
 
         return true;
     }
 
+    public void SetNavItem(int LayoutID, DrawerLayout drawer, String title) {
+        Log.d(TAG, title);
+        setContentView(LayoutID);
+        m_drawerLayout = drawer;
+        initToolBar(drawer, title);
+    }
+
+
     public void initToolBar(DrawerLayout drawer, String toolbarTitle) {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        //toolbarTitle is usually the name of the navigation item
         toolbar.setTitle(toolbarTitle);
 
         setSupportActionBar(toolbar);
@@ -123,20 +101,13 @@ public class Navigation extends AppCompatActivity implements NavigationView.OnNa
         //Start the NavigationBar (Toggle available)
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        //Set the actionbar listener
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        //Set the navigation listener
         NavigationView navigationView = (NavigationView) findViewById(R.id.sidebar_navigation);
         navigationView.setNavigationItemSelectedListener(this);
-
-//        toolbar.setNavigationOnClickListener(
-//                new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        Toast.makeText(Navigation.this, "clicking the toolbar!", Toast.LENGTH_SHORT).show();
-//                    }
-//                }
-//        );
     }
 }
 

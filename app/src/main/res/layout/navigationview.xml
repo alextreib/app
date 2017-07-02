@@ -8,4 +8,4 @@
     android:layout_gravity="start"
     android:fitsSystemWindows="true"
     app:headerLayout="@layout/sidebar_header"
-    app:menu="@menu/activity_navigation_drawer" />
+    app:menu="@menu/navigation" />
