@@ -14,8 +14,8 @@
     tools:showIn="@layout/v_start">
 
     <TextView
-        android:id="@+id/c_start"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Herzlich Willkommen, Alexander! -> News?!" />
+        android:text="@string/server_news"
+        android:typeface="sans"/>
 </RelativeLayout>
