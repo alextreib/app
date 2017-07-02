@@ -21,6 +21,8 @@ import com.google.android.gms.common.api.GoogleApiClient;
 
 public class Navigation extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    private NavigationView m_navigationView;
+    private DrawerLayout m_drawerLayout;
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -45,14 +47,14 @@ public class Navigation extends AppCompatActivity
         });
 
         //Start the NavigationBar (Toggle available)
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.v_start);
+        m_drawerLayout = (DrawerLayout) findViewById(R.id.v_start);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
+                this, m_drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        m_drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.sidebar_navigation);
-        navigationView.setNavigationItemSelectedListener(this);
+        m_navigationView = (NavigationView) findViewById(R.id.sidebar_navigation);
+        m_navigationView.setNavigationItemSelectedListener(this);
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
@@ -60,9 +62,10 @@ public class Navigation extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.v_start);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+            //close the drawer -> and close the application
+            drawer.closeDrawers();
         } else {
             super.onBackPressed();
         }
@@ -94,20 +97,17 @@ public class Navigation extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem menuitem) {
-//        Snackbar mySnackbar = Snackbar.make((NavigationView) findViewById(R.id.sidebar_navigation),
-//                "test", Snackbar.LENGTH_SHORT);
-//        mySnackbar.setAction("test", null);
-//        mySnackbar.show();
-        // Handle sidebar view item clicks here.
+        // Is called when the user clicks on an item of the navigation bar
         int id = menuitem.getItemId();
         menuitem.setChecked(true);
 
+        //close the drawer before new content is loaded -> error because R.id.v_start can't be found
+        m_drawerLayout.closeDrawer(GravityCompat.START);
+
         if (id == R.id.nav_tanzkursplan) {
-
             setContentView(R.layout.v_tanzkursplan);
-            // Handle the camera action
         } else if (id == R.id.nav_kursinhalte) {
-
+            setContentView(R.layout.v_tanzkursinhalt);
         } else if (id == R.id.nav_tanzpartys) {
 
         } else if (id == R.id.nav_kontakt) {
@@ -118,44 +118,6 @@ public class Navigation extends AppCompatActivity
 
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    public Action getIndexApiAction() {
-        Thing object = new Thing.Builder()
-                .setName("Navigation Page") // TODO: Define a title for the content shown.
-                // TODO: Make sure this auto-generated URL is correct.
-                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
-                .build();
-        return new Action.Builder(Action.TYPE_VIEW)
-                .setObject(object)
-                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
-                .build();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
-        AppIndex.AppIndexApi.start(client, getIndexApiAction());
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        AppIndex.AppIndexApi.end(client, getIndexApiAction());
-        client.disconnect();
     }
 }
