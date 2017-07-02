@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.view.Gravity;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -11,6 +12,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -19,24 +21,20 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 
-public class Navigation extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
-    private NavigationView m_navigationView;
-    private DrawerLayout m_drawerLayout;
+public class Navigation extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
+    private DrawerLayout m_drawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.v_start);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.v_start);
+        m_drawerLayout=drawer;
+        initToolBar(drawer,getString(R.string.app_name) );
 
+
+        //unnecessary
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,30 +43,22 @@ public class Navigation extends AppCompatActivity
                         .setAction("Action", null).show();
             }
         });
-
-        //Start the NavigationBar (Toggle available)
-        m_drawerLayout = (DrawerLayout) findViewById(R.id.v_start);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, m_drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        m_drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
-
-        m_navigationView = (NavigationView) findViewById(R.id.sidebar_navigation);
-        m_navigationView.setNavigationItemSelectedListener(this);
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     @Override
     public void onBackPressed() {
+        setContentView(R.layout.v_start);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.v_start);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            //close the drawer -> and close the application
-            drawer.closeDrawers();
-        } else {
-            super.onBackPressed();
-        }
+        initToolBar(drawer,getString(R.string.app_name) );
+        super.onBackPressed();
+
+//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.v_start);
+//        if (drawer.isDrawerOpen(GravityCompat.START)) {
+//            //close the drawer -> and close the application
+//            drawer.closeDrawers();
+//        } else {
+//            super.onBackPressed();
+//        }
     }
 
     @Override
@@ -106,6 +96,9 @@ public class Navigation extends AppCompatActivity
 
         if (id == R.id.nav_tanzkursplan) {
             setContentView(R.layout.v_tanzkursplan);
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.v_tanzkursplan);
+            m_drawerLayout=drawer;
+            initToolBar(drawer,menuitem.getTitle().toString());
         } else if (id == R.id.nav_kursinhalte) {
             setContentView(R.layout.v_tanzkursinhalt);
         } else if (id == R.id.nav_tanzpartys) {
@@ -120,4 +113,31 @@ public class Navigation extends AppCompatActivity
 
         return true;
     }
+
+    public void initToolBar(DrawerLayout drawer, String toolbarTitle) {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(toolbarTitle);
+
+        setSupportActionBar(toolbar);
+
+        //Start the NavigationBar (Toggle available)
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.sidebar_navigation);
+        navigationView.setNavigationItemSelectedListener(this);
+
+//        toolbar.setNavigationOnClickListener(
+//                new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        Toast.makeText(Navigation.this, "clicking the toolbar!", Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//        );
+    }
 }
+
+

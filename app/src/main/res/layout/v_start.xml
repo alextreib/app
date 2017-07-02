@@ -17,19 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.design.widget.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/AppTheme.AppBarOverlay">
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
-                app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-        </android.support.design.widget.AppBarLayout>
+        <include layout="@layout/toolbar"/>
 
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -51,13 +39,6 @@
     </android.support.design.widget.CoordinatorLayout>
 
     //Navigation View
-    <android.support.design.widget.NavigationView
-        android:id="@+id/sidebar_navigation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        app:headerLayout="@layout/sidebar_header"
-        app:menu="@menu/activity_navigation_drawer" />
+    <include layout="@layout/navigationview" />
 
 </android.support.v4.widget.DrawerLayout>
