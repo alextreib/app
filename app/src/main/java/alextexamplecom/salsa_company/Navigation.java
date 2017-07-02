@@ -39,7 +39,7 @@ public class Navigation extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.sidebar_main);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.sidebar_navigation);
         navigationView.setNavigationItemSelectedListener(this);
     }
 
@@ -69,6 +69,7 @@ public class Navigation extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            setContentView(R.layout.v_account);
             return true;
         }
 
@@ -78,12 +79,12 @@ public class Navigation extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle action_account view item clicks here.
+        // Handle sidebar view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_tanzkursplan) {
-          //TODO:  RelativeLayout drawer = (RelativeLayout) findViewById(R.id.view_tanzkursplan);
 
+            setContentView(R.layout.v_tanzkursplan);
             // Handle the camera action
         } else if (id == R.id.nav_kursinhalte) {
 
