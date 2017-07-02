@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/v_start"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="alextexamplecom.salsa_company.Navigation">
+    tools:context="alextexamplecom.salsa_company.Navigation"
+    tools:openDrawer="start">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
 
-    <android.support.v7.widget.Toolbar
+        <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
@@ -22,7 +23,15 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/c_start" />
+    //content
+    <include layout="@layout/c_start"
+        android:visibility="visible"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:id="@+id/c_start" />
+
+
+
 
     //E-Mail button
     <android.support.design.widget.FloatingActionButton
@@ -33,4 +42,13 @@
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@android:drawable/ic_dialog_email" />
 
-</android.support.design.widget.CoordinatorLayout>
+    <android.support.design.widget.NavigationView
+        android:id="@+id/sidebar_navigation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/sidebar_header"
+        app:menu="@menu/activity_navigation_drawer" />
+
+</android.support.v4.widget.DrawerLayout>

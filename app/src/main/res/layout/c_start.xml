@@ -14,6 +14,7 @@
     tools:showIn="@layout/v_start">
 
     <TextView
+        android:id="@+id/c_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Herzlich Willkommen, Alexander! -> News?!" />
