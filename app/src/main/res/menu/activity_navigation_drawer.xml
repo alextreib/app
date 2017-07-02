@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_tanzkursplan"
@@ -12,7 +11,7 @@
             android:title="Kursinhalte" />
         <item
             android:id="@+id/nav_tanzpartys"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/ic_dance_logo"
             android:title="Tanzpartys" />
         <item
             android:id="@+id/nav_news"
@@ -32,5 +31,4 @@
                 android:title="Kontakt" />
         </menu>
     </item>
-
 </menu>
