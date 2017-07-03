@@ -49,7 +49,7 @@ public class Navigation extends AppCompatActivity implements NavigationView.OnNa
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.account_settings) {
-            SetNavItem(R.layout.v_account, (DrawerLayout) findViewById(R.id.v_account), menuitem.getTitle().toString());
+            SetNavItem(R.layout.v_account, R.id.v_account, menuitem.getTitle().toString());
             return true;
         }
 
@@ -67,25 +67,28 @@ public class Navigation extends AppCompatActivity implements NavigationView.OnNa
 
         int id = menuitem.getItemId();
         if (id == R.id.nav_tanzkursplan) {
-            SetNavItem(R.layout.v_tanzkursplan, (DrawerLayout) findViewById(R.id.v_tanzkursplan), menuitem.getTitle().toString());
+            SetNavItem(R.layout.v_tanzkursplan, R.id.v_tanzkursplan, menuitem.getTitle().toString());
         } else if (id == R.id.nav_kursinhalte) {
-            SetNavItem(R.layout.v_tanzkursinhalt, (DrawerLayout) findViewById(R.id.v_tanzkursinhalt), menuitem.getTitle().toString());
+            SetNavItem(R.layout.v_tanzkursinhalt, R.id.v_tanzkursinhalt, menuitem.getTitle().toString());
         } else if (id == R.id.nav_tanzpartys) {
-            SetNavItem(R.layout.v_tanzpartys, (DrawerLayout) findViewById(R.id.v_tanzpartys), menuitem.getTitle().toString());
+            SetNavItem(R.layout.v_tanzpartys, R.id.v_tanzpartys, menuitem.getTitle().toString());
         } else if (id == R.id.nav_app_teilen) {
 //open share options
         } else if (id == R.id.nav_kontakt) {
-            SetNavItem(R.layout.v_contact, (DrawerLayout) findViewById(R.id.v_contact), menuitem.getTitle().toString());
+            SetNavItem(R.layout.v_contact, R.id.v_contact, menuitem.getTitle().toString());
         }
 
 
         return true;
     }
 
-    public void SetNavItem(int LayoutID, DrawerLayout drawer, String title) {
+    public void SetNavItem(int LayoutID, int drawerID, String title) {
         Log.d(TAG, title);
         setContentView(LayoutID);
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(drawerID);
         m_drawerLayout = drawer;
+
         initToolBar(drawer, title);
     }
 

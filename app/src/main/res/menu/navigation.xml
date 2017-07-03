@@ -3,11 +3,11 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_tanzkursplan"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_tanzkursplan"
             android:title="Tanzkursplan" />
         <item
             android:id="@+id/nav_kursinhalte"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_tanzkursinhalt"
             android:title="Kursinhalte" />
         <item
             android:id="@+id/nav_tanzpartys"
