@@ -42,14 +42,6 @@ public class Navigation extends AppCompatActivity implements NavigationView.OnNa
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Write a message to the database
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("message");
-
-        myRef.setValue("Hello, World!");
-
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.v_start);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.v_start);
@@ -115,6 +107,36 @@ public class Navigation extends AppCompatActivity implements NavigationView.OnNa
     }
 
     public void SetNavItem(int LayoutID, int drawerID, String title) {
+
+        // Write a message to the database
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("message");
+
+        myRef.setValue("Hello, World2!");
+
+
+        // store app title to 'app_title' node
+        //String key= myRef.getKey();
+
+        // Read from the database
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                String value = dataSnapshot.getValue(String.class);
+                Log.d(TAG, "Value is: " + value);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
+
+
+
         Log.d(TAG, title);
         setContentView(LayoutID);
 
