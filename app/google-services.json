@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "859773328129",
+    "firebase_url": "https://salsacompany-5442d.firebaseio.com",
+    "project_id": "salsacompany-5442d",
+    "storage_bucket": "salsacompany-5442d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:859773328129:android:c05cec84876a2f09",
+        "android_client_info": {
+          "package_name": "alextexamplecom.salsa_company"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "859773328129-1jj35e656gslpn07s1e0m35acif36afc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "alextexamplecom.salsa_company",
+            "certificate_hash": "51423cdde783d4b52a4e069c4893ba9979cf1c49"
+          }
+        },
+        {
+          "client_id": "859773328129-6522a7sknt3eko076rvqfdievp9u9sul.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6YMq9GltiFJFyhWSTq6q1hSRgosq1Q4w"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "859773328129-6522a7sknt3eko076rvqfdievp9u9sul.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
