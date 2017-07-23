@@ -21,6 +21,7 @@
         android:text="Oberer Raum" />
 
     <ImageView
+        android:id="@+id/c_tanzkursplan_view"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:src="@mipmap/tanzkursplan" />
