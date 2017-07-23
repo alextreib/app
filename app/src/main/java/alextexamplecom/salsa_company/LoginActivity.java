@@ -47,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.btn_login)
     Button _loginButton;
     @BindView(R.id.link_resetpwd)
-    Button _resetpwdButton;
+    EditText _resetpwdButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -182,14 +182,23 @@ public class LoginActivity extends AppCompatActivity {
 
         //Spelling check
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            //_emailText.setError("enter a valid email address");
+            //Spelling not correct
             Toast.makeText(getBaseContext(), "Gib deine E-Mail Adresse ein", Toast.LENGTH_LONG).show();
         } else {
-            // _emailText.setError(null);
-            //email correct, send a reset mail
-            mAuth.sendPasswordResetEmail(_emailText.getText().toString());
-
-            Toast.makeText(getBaseContext(), "Die E-Mail wurde versendet", Toast.LENGTH_LONG).show();
+            //Spelling correct, send a reset mail
+            mAuth.sendPasswordResetEmail(email)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                // Success -> close dialogs and setview to v_start
+                                Toast.makeText(getBaseContext(), "E-Mail wurde versendet", Toast.LENGTH_LONG).show();
+                            } else {
+                                // Failed -> message and nothing.
+                                Toast.makeText(getBaseContext(), "Fehler beim Versenden der E-Mail", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
         }
     }
 }
