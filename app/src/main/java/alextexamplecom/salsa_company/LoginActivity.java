@@ -1,6 +1,7 @@
 package alextexamplecom.salsa_company;
 
 import android.app.ProgressDialog;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
@@ -101,13 +102,11 @@ public class LoginActivity extends AppCompatActivity {
         String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
 
-        final UserCredentials userCre = new UserCredentials(email, password);
-
-        m_userCred.WriteCredentialsToFile(m_userCred, getFilesDir());
+        m_userCred = new UserCredentials(email, password);
 
         //TODO: remove
         progressDialog.dismiss();
-        onLoginSuccess(userCre);
+        onLoginSuccess(m_userCred);
         //Authentification via Firebase instance mAuth
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -116,7 +115,7 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Success -> close dialogs and setview to v_start
                             progressDialog.dismiss();
-                            onLoginSuccess(userCre);
+                            onLoginSuccess(m_userCred);
                         } else {
                             // Failed -> message and nothing.
                             progressDialog.dismiss();
@@ -128,14 +127,20 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onLoginSuccess(UserCredentials userCred) {
         //postprocessing
-        Log.d(TAG, "signInWithEmail:success");
+        Log.d(TAG, "Login successful");
         Toast.makeText(getBaseContext(), "Login successful", Toast.LENGTH_LONG).show();
 
-        //Get user data -> map it to the database
-        FirebaseUser user = mAuth.getCurrentUser();
+        //Write credentialsToFile
+        m_userCred.WriteCredentialsToFile(getFilesDir());
+        //Get user data -> map it to the database and give it to the navigationactivity
+        FirebaseUser firebaseUser = mAuth.getCurrentUser();
+
+
+
 
         //Start Navigation activity
-        Intent intent_nav = new Intent(LoginActivity.this, NavigationActivity.class);
+        Intent intent_nav = new Intent(this, NavigationActivity.class);
+        //intent_nav.putExtra("Test",new UserCredentials());
         startActivity(intent_nav);
     }
 

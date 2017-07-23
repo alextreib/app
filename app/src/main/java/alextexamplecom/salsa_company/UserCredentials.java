@@ -53,7 +53,7 @@ public class UserCredentials {
         return "".equals(this.m_email) || ("".equals(this.m_pwd));
     }
 
-    public boolean WriteCredentialsToFile(UserCredentials userCre, File parentPath) {
+    public boolean WriteCredentialsToFile( File parentPath) {
         File file = new File(parentPath, CredentialsFileName);
 
         try {
@@ -65,7 +65,7 @@ public class UserCredentials {
             BufferedOutputStream bos = new BufferedOutputStream(fos);
             CipherOutputStream cos = new CipherOutputStream(bos, m_cipher);
             ObjectOutputStream oos = new ObjectOutputStream(cos);
-            oos.writeObject(userCre);
+            oos.writeObject(this);
             oos.flush();
             oos.close();
             return true;
