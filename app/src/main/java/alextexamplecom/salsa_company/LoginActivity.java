@@ -47,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.btn_login)
     Button _loginButton;
     @BindView(R.id.link_resetpwd)
-    EditText _resetpwdButton;
+    TextView _resetpwdButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
