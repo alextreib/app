@@ -57,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
 
         //formatting validation
         if (!validate()) {
-            onLoginFailed();
+            onLoginFailed(null);
             return;
         }
 
@@ -72,52 +72,44 @@ public class LoginActivity extends AppCompatActivity {
         String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
 
-        //Authentification
+        //TODO: remove
+        onLoginSuccess(progressDialog);
+        //Authentification via Firebase instance mAuth
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Success -> close dialogs and setview to v_start
-                            Log.d(TAG, "signInWithEmail:success");
-                            progressDialog.dismiss();
-
-                            FirebaseUser user = mAuth.getCurrentUser();
-
+                            onLoginSuccess(progressDialog);
                         }
-
                         else {
                             // Failed -> message and nothing.
-                            Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            progressDialog.dismiss();
-
-                            onLoginFailed();
+                            onLoginFailed(progressDialog);
                         }
                     }
                 });
-
-
-/*        new android.os.Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
-                        // On complete call either onLoginSuccess or onLoginFailed
-                        onLoginSuccess();
-                        // onLoginFailed();
-                        progressDialog.dismiss();
-                    }
-                }, 3000);*/
     }
 
-    public void onLoginSuccess() {
+    public void onLoginSuccess(ProgressDialog progressDialog) {
+        //postprocessing
+        Log.d(TAG, "signInWithEmail:success");
         Toast.makeText(getBaseContext(), "Login successful", Toast.LENGTH_LONG).show();
+        progressDialog.dismiss();
 
-        setContentView(R.layout.v_start);
-        finish();
+        //Get user data -> map it to the database
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        //Start Navigation activity
+        Intent intent_nav = new Intent(LoginActivity.this, NavigationActivity.class);
+        startActivity(intent_nav);
     }
 
-    public void onLoginFailed() {
+    public void onLoginFailed(ProgressDialog progressDialog) {
+        Log.w(TAG, "signInWithEmail:failure");
         Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
 
+        progressDialog.dismiss();
         _loginButton.setEnabled(true);
     }
 
@@ -128,9 +120,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public boolean validate() {
+        //check spelling
         boolean valid = true;
 
-        //TODO firebase check
         String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
 

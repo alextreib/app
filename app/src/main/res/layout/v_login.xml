@@ -12,8 +12,7 @@
         android:paddingLeft="24dp"
         android:paddingRight="24dp"
         android:weightSum="1"
-        android:background="@android:color/holo_red_light"
-        >
+        android:background="@android:color/holo_red_light">
 
         <ImageView android:src="@drawable/ic_salsa_logo_reverse"
             android:layout_width="176dp"

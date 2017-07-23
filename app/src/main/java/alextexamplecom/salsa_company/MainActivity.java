@@ -1,6 +1,7 @@
 package alextexamplecom.salsa_company;
 
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -20,6 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import android.content.Intent;
+import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity  {
@@ -27,8 +29,9 @@ public class MainActivity extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
+        Intent intent_login = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(intent_login);
+        //startActivity will continue and not wait
     }
 }
 
