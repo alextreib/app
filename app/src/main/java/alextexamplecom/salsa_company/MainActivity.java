@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Intent intent_login = new Intent(MainActivity.this, LoginActivity.class);
+        Intent intent_login = new Intent(MainActivity.this, AccountActivity.class);
         startActivity(intent_login);
         //startActivity will continue and not wait
     }

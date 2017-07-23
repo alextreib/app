@@ -2,6 +2,7 @@ package alextexamplecom.salsa_company;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -22,11 +23,18 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+
+import static android.R.attr.data;
+import static android.R.attr.path;
+
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
     private FirebaseAuth mAuth;
-
 
     @BindView(R.id.input_email)
     EditText _emailText;
@@ -71,6 +79,9 @@ public class LoginActivity extends AppCompatActivity {
 
         String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
+
+        UserCredentials userCre= new UserCredentials(email,password);
+        WriteCredentialsToFile(UserCredentials.encrypt(userCre));
 
         //TODO: remove
         onLoginSuccess(progressDialog);
@@ -141,5 +152,56 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         return valid;
+    }
+
+
+    private boolean WriteCredentialsToFile(String data)
+    {
+        File file = new File(getFilesDir(), "credentials.user");
+
+        // Save
+        try
+        {
+            file.createNewFile();
+            FileOutputStream fOut = new FileOutputStream(file);
+            OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
+            myOutWriter.append(data);
+
+            myOutWriter.close();
+
+            fOut.flush();
+            fOut.close();
+            return true;
+        }
+        catch (IOException e)
+        {
+            Log.e("Exception", "File write failed: " + e.toString());
+            return false;
+        }
+    }
+
+    private boolean ReadCredi(String data)
+    {
+        File file = new File(getFilesDir(), "credentials.user");
+
+        // Save
+        try
+        {
+            file.createNewFile();
+            FileOutputStream fOut = new FileOutputStream(file);
+            OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
+            myOutWriter.append(data);
+
+            myOutWriter.close();
+
+            fOut.flush();
+            fOut.close();
+            return true;
+        }
+        catch (IOException e)
+        {
+            Log.e("Exception", "File write failed: " + e.toString());
+            return false;
+        }
     }
 }

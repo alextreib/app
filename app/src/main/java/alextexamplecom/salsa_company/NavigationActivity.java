@@ -81,7 +81,7 @@ public class NavigationActivity extends AppCompatActivity implements NavigationV
         return super.onOptionsItemSelected(menuitem);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
+
     @Override
     public boolean onNavigationItemSelected(MenuItem menuitem) {
         // Is called when the user clicks on an item of the navigation bar
@@ -137,7 +137,6 @@ public class NavigationActivity extends AppCompatActivity implements NavigationV
         });
 
 
-
         Log.d(TAG, title);
         setContentView(LayoutID);
 
@@ -146,7 +145,6 @@ public class NavigationActivity extends AppCompatActivity implements NavigationV
 
         initToolBar(drawer, title);
     }
-
 
     public void initToolBar(DrawerLayout drawer, String toolbarTitle) {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -162,12 +160,12 @@ public class NavigationActivity extends AppCompatActivity implements NavigationV
         //Set the actionbar listener
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+        SetNavListener();
+    }
 
+    public void SetNavListener() {
         //Set the navigation listener
         NavigationView navigationView = (NavigationView) findViewById(R.id.sidebar_navigation);
         navigationView.setNavigationItemSelectedListener(this);
     }
-
-
-
 }

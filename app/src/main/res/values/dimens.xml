@@ -6,4 +6,9 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+
+
+    //Self defined
+    <dimen name="text_edge_distance">25dp</dimen>
+    <dimen name="predefined_padding">15dp</dimen>
 </resources>
