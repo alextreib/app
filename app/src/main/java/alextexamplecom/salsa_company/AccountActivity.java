@@ -131,8 +131,4 @@ public class AccountActivity extends AppCompatActivity{
         drawer.addDrawerListener(toggle);
         toggle.syncState();
     }
-
-
-
-
 }

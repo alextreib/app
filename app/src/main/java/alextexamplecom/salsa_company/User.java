@@ -1,8 +1,6 @@
 package alextexamplecom.salsa_company;
 
-
-
-
+//Full user data
 
 public class User {
     //unique identifier is the email -> getting through login

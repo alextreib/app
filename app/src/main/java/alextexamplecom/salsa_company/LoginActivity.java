@@ -23,18 +23,22 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-
-import static android.R.attr.data;
-import static android.R.attr.path;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
     private FirebaseAuth mAuth;
+    private UserCredentials m_userCred;
 
     @BindView(R.id.input_email)
     EditText _emailText;
@@ -42,22 +46,39 @@ public class LoginActivity extends AppCompatActivity {
     EditText _passwordText;
     @BindView(R.id.btn_login)
     Button _loginButton;
+    @BindView(R.id.link_resetpwd)
+    Button _resetpwdButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.v_login);
-        ButterKnife.bind(this);
 
-        mAuth = FirebaseAuth.getInstance();
+        UserCredentials m_userCred = new UserCredentials();
+        m_userCred = m_userCred.ReadCredi(getFilesDir());
+        if (!m_userCred.IsEmpty()) {
+            //Credentials already saved
+            onLoginSuccess(m_userCred);
+        } else {
+            //Sign in process -> without saved credentials
+            setContentView(R.layout.v_login);
+            ButterKnife.bind(this);
 
-        _loginButton.setOnClickListener(new View.OnClickListener() {
+            mAuth = FirebaseAuth.getInstance();
+            _loginButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    login();
+                }
+            });
 
-            @Override
-            public void onClick(View v) {
-                login();
-            }
-        });
+            _resetpwdButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    reset_pwd();
+
+                }
+            });
+        }
     }
 
     public void login() {
@@ -65,7 +86,7 @@ public class LoginActivity extends AppCompatActivity {
 
         //formatting validation
         if (!validate()) {
-            onLoginFailed(null);
+            onLoginFailed();
             return;
         }
 
@@ -80,11 +101,13 @@ public class LoginActivity extends AppCompatActivity {
         String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
 
-        UserCredentials userCre= new UserCredentials(email,password);
-        WriteCredentialsToFile(UserCredentials.encrypt(userCre));
+        final UserCredentials userCre = new UserCredentials(email, password);
+
+        m_userCred.WriteCredentialsToFile(m_userCred, getFilesDir());
 
         //TODO: remove
-        onLoginSuccess(progressDialog);
+        progressDialog.dismiss();
+        onLoginSuccess(userCre);
         //Authentification via Firebase instance mAuth
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -92,21 +115,21 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Success -> close dialogs and setview to v_start
-                            onLoginSuccess(progressDialog);
-                        }
-                        else {
+                            progressDialog.dismiss();
+                            onLoginSuccess(userCre);
+                        } else {
                             // Failed -> message and nothing.
-                            onLoginFailed(progressDialog);
+                            progressDialog.dismiss();
+                            onLoginFailed();
                         }
                     }
                 });
     }
 
-    public void onLoginSuccess(ProgressDialog progressDialog) {
+    public void onLoginSuccess(UserCredentials userCred) {
         //postprocessing
         Log.d(TAG, "signInWithEmail:success");
         Toast.makeText(getBaseContext(), "Login successful", Toast.LENGTH_LONG).show();
-        progressDialog.dismiss();
 
         //Get user data -> map it to the database
         FirebaseUser user = mAuth.getCurrentUser();
@@ -116,11 +139,10 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent_nav);
     }
 
-    public void onLoginFailed(ProgressDialog progressDialog) {
+    public void onLoginFailed() {
         Log.w(TAG, "signInWithEmail:failure");
         Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
 
-        progressDialog.dismiss();
         _loginButton.setEnabled(true);
     }
 
@@ -155,53 +177,19 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    private boolean WriteCredentialsToFile(String data)
-    {
-        File file = new File(getFilesDir(), "credentials.user");
+    private void reset_pwd() {
+        String email = _emailText.getText().toString();
 
-        // Save
-        try
-        {
-            file.createNewFile();
-            FileOutputStream fOut = new FileOutputStream(file);
-            OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
-            myOutWriter.append(data);
+        //Spelling check
+        if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            //_emailText.setError("enter a valid email address");
+            Toast.makeText(getBaseContext(), "Gib deine E-Mail Adresse ein", Toast.LENGTH_LONG).show();
+        } else {
+            // _emailText.setError(null);
+            //email correct, send a reset mail
+            mAuth.sendPasswordResetEmail(_emailText.getText().toString());
 
-            myOutWriter.close();
-
-            fOut.flush();
-            fOut.close();
-            return true;
-        }
-        catch (IOException e)
-        {
-            Log.e("Exception", "File write failed: " + e.toString());
-            return false;
-        }
-    }
-
-    private boolean ReadCredi(String data)
-    {
-        File file = new File(getFilesDir(), "credentials.user");
-
-        // Save
-        try
-        {
-            file.createNewFile();
-            FileOutputStream fOut = new FileOutputStream(file);
-            OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
-            myOutWriter.append(data);
-
-            myOutWriter.close();
-
-            fOut.flush();
-            fOut.close();
-            return true;
-        }
-        catch (IOException e)
-        {
-            Log.e("Exception", "File write failed: " + e.toString());
-            return false;
+            Toast.makeText(getBaseContext(), "Die E-Mail wurde versendet", Toast.LENGTH_LONG).show();
         }
     }
 }
