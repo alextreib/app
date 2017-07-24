@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Intent intent_main = new Intent(this, LoginActivity.class);
+        Intent intent_main = new Intent(this, Tanzkursplan.class);
         startActivity(intent_main);
         //startActivity will continue and not wait
     }

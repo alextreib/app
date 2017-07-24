@@ -62,12 +62,9 @@ public class AccountActivity extends AppCompatActivity{
         initToolBar(drawer, "AccounT");
         FillAutoCompletion();
 
-
         //retrieve mUser from Login (either through + information if
 
         WriteToDatabase();
-
-
 
     }
 

@@ -93,6 +93,8 @@ public class NavigationActivity extends AppCompatActivity implements NavigationV
         int id = menuitem.getItemId();
         if (id == R.id.nav_tanzkursplan) {
             SetNavItem(R.layout.v_tanzkursplan, R.id.v_tanzkursplan, menuitem.getTitle().toString());
+            Intent intent_main = new Intent(this, Tanzkursplan.class);
+            startActivity(intent_main);
         } else if (id == R.id.nav_kursinhalte) {
             SetNavItem(R.layout.v_tanzkursinhalt, R.id.v_tanzkursinhalt, menuitem.getTitle().toString());
         } else if (id == R.id.nav_tanzpartys) {
