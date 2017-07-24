@@ -15,13 +15,25 @@
     tools:showIn="@layout/v_tanzkursplan">
 
     <TextView
-        android:id="@+id/c_tanzkursplan_txt"
+        android:id="@+id/c_tanzkursplan_oben_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Oberer Raum" />
 
     <ImageView
-        android:id="@+id/c_tanzkursplan_view"
+        android:id="@+id/c_tanzkursplan_oben_view"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:src="@mipmap/tanzkursplan" />
+
+    <TextView
+        android:id="@+id/c_tanzkursplan_unten_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Unterer Raum" />
+
+    <ImageView
+        android:id="@+id/c_tanzkursplan_unten_view"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:src="@mipmap/tanzkursplan" />

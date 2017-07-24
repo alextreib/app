@@ -5,4 +5,7 @@ package alextexamplecom.salsa_company;
  */
 
 public interface SalsaInterface {
+
+
+
 }

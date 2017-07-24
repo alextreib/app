@@ -20,44 +20,21 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-public class Tanzkursplan extends AppCompatActivity {
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        String filename = "mountains.jpg";
-        FirebaseStorage mStorage = FirebaseStorage.getInstance();
-        setContentView(R.layout.v_tanzkursplan);
+public class Tanzkursplan {
 
-        final ImageView image = (ImageView) findViewById(R.id.c_tanzkursplan_view);
+    public void SetImage(final NavigationActivity nav, final ImageView image, String filename) {
+        FirebaseStorage mStorage = FirebaseStorage.getInstance();
 
         // question.imgQuestion  = "qimgs/-KiTpzP5t-xJOO5nSK0A/1493896460324-ch1pg2.jpg"
         final StorageReference ref = mStorage.getReference().child(filename);
-        ref.getDownloadUrl().addOnSuccessListener(this, new OnSuccessListener<Uri>() {
+        ref.getDownloadUrl().addOnSuccessListener(nav, new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                Glide.with(Tanzkursplan.this)
+                Glide.with(nav)
                         .load(uri)
                         .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
                         .into(image);
             }
         });
-
-
-        //TODO: Make filename dependant on user (tanzschule)
-/*
-        StorageReference storageReference =
-                FirebaseStorage
-                .getInstance()
-                .getReference()
-                .child(filename);
-
-
-
-        // Load the image using Glide
-        Glide.with(this)
-                .using(new FirebaseImageLoader())
-                .load(storageReference.getDownloadUrl())
-                .into(image);
-    }*/
     }
 }
