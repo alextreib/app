@@ -50,7 +50,7 @@ import butterknife.ButterKnife;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
-public class AccountActivity extends AppCompatActivity{
+public class AccountActivity extends AppCompatActivity {
     FirebaseUser mUser;
 
     @Override
@@ -68,14 +68,13 @@ public class AccountActivity extends AppCompatActivity{
 
     }
 
-    private void FillAutoCompletion()
-    {
+    private void FillAutoCompletion() {
         //TODO: Abstrahieren
-        String[] tanzschulen = { "Stuttgart", "Böblingen", "Ludwigsburg" };
+        String[] tanzschulen = {"Stuttgart", "Böblingen", "Ludwigsburg"};
 
 
         //Create Array Adapter
-       ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.select_dialog_singlechoice, tanzschulen);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_singlechoice, tanzschulen);
         //Find TextView control
         AutoCompleteTextView acTextView = (AutoCompleteTextView) findViewById(R.id.account_tanzschule);
         //Set the number of characters the user must type before the drop down list is shown
@@ -84,23 +83,20 @@ public class AccountActivity extends AppCompatActivity{
         acTextView.setAdapter(adapter);
     }
 
-    private boolean CheckCompletion()
-    {
+    private boolean CheckCompletion() {
         //if(everything is written down)
         return true;
     }
 
-    private User AssembleDataIntoUser()
-    {
+    private User AssembleDataIntoUser() {
         //Get data from textview items
-        User user=new User("firstname", "lastname");
+        User user = new User("firstname", "lastname");
         return user;
     }
 
 
-    private boolean WriteToDatabase()
-    {
-        DatabaseReference DatabaseRef=FirebaseDatabase.getInstance().getReference();
+    private boolean WriteToDatabase() {
+        DatabaseReference DatabaseRef = FirebaseDatabase.getInstance().getReference();
 
         DatabaseReference UsersRef = DatabaseRef.child("users");
 
@@ -112,7 +108,7 @@ public class AccountActivity extends AppCompatActivity{
         return true;
     }
 
-//TODO: Unify with Navigation -> don't have the same code twice
+    //TODO: Unify with Navigation -> don't have the same code twice
     public void initToolBar(DrawerLayout drawer, String toolbarTitle) {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
