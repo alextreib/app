@@ -49,20 +49,22 @@ public class NavigationActivity extends AppCompatActivity implements NavigationV
     private static final String TAG = MainActivity.class.getSimpleName();
     private Tanzkursplan m_tanzkursplan;
 
+    private final String m_toolBarTitle="Salsa Company";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.v_start);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.v_start);
         m_drawerLayout = drawer;
-        initToolBar(drawer, getString(R.string.app_name));
+        initToolBar(drawer);
     }
 
     @Override
     public void onBackPressed() {
         setContentView(R.layout.v_start);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.v_start);
-        initToolBar(drawer, getString(R.string.app_name));
+        initToolBar(drawer);
         super.onBackPressed();
     }
 
@@ -134,15 +136,13 @@ public class NavigationActivity extends AppCompatActivity implements NavigationV
         DrawerLayout drawer = (DrawerLayout) findViewById(drawerID);
         m_drawerLayout = drawer;
 
-        initToolBar(drawer, title);
+        initToolBar(drawer);
     }
 
-    public void initToolBar(DrawerLayout drawer, String toolbarTitle) {
+    public void initToolBar(DrawerLayout drawer) {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-        //toolbarTitle is usually the name of the navigation item
-        toolbar.setTitle(toolbarTitle);
-
+        toolbar.setTitle(m_toolBarTitle);
         setSupportActionBar(toolbar);
 
         //Start the NavigationBar (Toggle available)
@@ -151,10 +151,7 @@ public class NavigationActivity extends AppCompatActivity implements NavigationV
         //Set the actionbar listener
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-        SetNavListener();
-    }
 
-    public void SetNavListener() {
         //Set the navigation listener
         NavigationView navigationView = (NavigationView) findViewById(R.id.sidebar_navigation);
         navigationView.setNavigationItemSelectedListener(this);

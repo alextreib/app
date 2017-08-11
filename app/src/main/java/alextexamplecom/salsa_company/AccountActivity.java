@@ -51,6 +51,9 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
 public class AccountActivity extends AppCompatActivity {
+    private final String m_toolBarTitle="Account";
+
+
     FirebaseUser mUser;
 
     @Override
@@ -59,7 +62,7 @@ public class AccountActivity extends AppCompatActivity {
 
         setContentView(R.layout.v_account);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.v_account);
-        initToolBar(drawer, "AccounT");
+        initToolBar(drawer);
         FillAutoCompletion();
 
         //retrieve mUser from Login (either through + information if
@@ -108,13 +111,10 @@ public class AccountActivity extends AppCompatActivity {
         return true;
     }
 
-    //TODO: Unify with Navigation -> don't have the same code twice
-    public void initToolBar(DrawerLayout drawer, String toolbarTitle) {
+    public void initToolBar(DrawerLayout drawer) {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-        //toolbarTitle is usually the name of the navigation item
-        toolbar.setTitle(toolbarTitle);
-
+        toolbar.setTitle(m_toolBarTitle);
         setSupportActionBar(toolbar);
 
         //Start the NavigationBar (Toggle available)
@@ -123,5 +123,9 @@ public class AccountActivity extends AppCompatActivity {
         //Set the actionbar listener
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
+        //Set the navigation listener
+        NavigationView navigationView = (NavigationView) findViewById(R.id.sidebar_navigation);
+        navigationView.setNavigationItemSelectedListener(this);
     }
 }
